@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE4AC29B17E7C15D0091C720 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4AC29A17E7C15D0091C720 /* CoreImage.framework */; };
 		DE9434A317E7B0AC008E26C2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE9434A217E7B0AC008E26C2 /* Foundation.framework */; };
 		DE9434A517E7B0AC008E26C2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE9434A417E7B0AC008E26C2 /* CoreGraphics.framework */; };
 		DE9434A717E7B0AC008E26C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE9434A617E7B0AC008E26C2 /* UIKit.framework */; };
@@ -32,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DE4AC29A17E7C15D0091C720 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		DE94349F17E7B0AC008E26C2 /* ClassicPhotos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClassicPhotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE9434A217E7B0AC008E26C2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DE9434A417E7B0AC008E26C2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -55,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE4AC29B17E7C15D0091C720 /* CoreImage.framework in Frameworks */,
 				DE9434A517E7B0AC008E26C2 /* CoreGraphics.framework in Frameworks */,
 				DE9434A717E7B0AC008E26C2 /* UIKit.framework in Frameworks */,
 				DE9434A317E7B0AC008E26C2 /* Foundation.framework in Frameworks */,
@@ -96,6 +99,7 @@
 		DE9434A117E7B0AC008E26C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DE4AC29A17E7C15D0091C720 /* CoreImage.framework */,
 				DE9434A217E7B0AC008E26C2 /* Foundation.framework */,
 				DE9434A417E7B0AC008E26C2 /* CoreGraphics.framework */,
 				DE9434A617E7B0AC008E26C2 /* UIKit.framework */,
@@ -443,6 +447,7 @@
 				DE9434CD17E7B0AD008E26C2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DE9434CE17E7B0AD008E26C2 /* Build configuration list for PBXNativeTarget "ClassicPhotosTests" */ = {
 			isa = XCConfigurationList;
@@ -451,6 +456,7 @@
 				DE9434D017E7B0AD008E26C2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
