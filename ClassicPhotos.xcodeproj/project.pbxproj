@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DE4AC29B17E7C15D0091C720 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4AC29A17E7C15D0091C720 /* CoreImage.framework */; };
+		DE7615BA17E7C2CD001A1740 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE7615B917E7C2CD001A1740 /* ListViewController.m */; };
 		DE9434A317E7B0AC008E26C2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE9434A217E7B0AC008E26C2 /* Foundation.framework */; };
 		DE9434A517E7B0AC008E26C2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE9434A417E7B0AC008E26C2 /* CoreGraphics.framework */; };
 		DE9434A717E7B0AC008E26C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE9434A617E7B0AC008E26C2 /* UIKit.framework */; };
@@ -34,6 +35,8 @@
 
 /* Begin PBXFileReference section */
 		DE4AC29A17E7C15D0091C720 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		DE7615B817E7C2CD001A1740 /* ListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
+		DE7615B917E7C2CD001A1740 /* ListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
 		DE94349F17E7B0AC008E26C2 /* ClassicPhotos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClassicPhotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE9434A217E7B0AC008E26C2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DE9434A417E7B0AC008E26C2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -112,6 +115,8 @@
 			isa = PBXGroup;
 			children = (
 				DE9434B117E7B0AC008E26C2 /* AppDelegate.h */,
+				DE7615B817E7C2CD001A1740 /* ListViewController.h */,
+				DE7615B917E7C2CD001A1740 /* ListViewController.m */,
 				DE9434B217E7B0AC008E26C2 /* AppDelegate.m */,
 				DE9434B417E7B0AC008E26C2 /* Images.xcassets */,
 				DE9434A917E7B0AC008E26C2 /* Supporting Files */,
@@ -245,6 +250,7 @@
 			files = (
 				DE9434B317E7B0AC008E26C2 /* AppDelegate.m in Sources */,
 				DE9434AF17E7B0AC008E26C2 /* main.m in Sources */,
+				DE7615BA17E7C2CD001A1740 /* ListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
