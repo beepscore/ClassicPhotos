@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreImage/CoreImage.h>
+
+#define kDatasourceURLString @"http://www.raywenderlich.com/downloads/ClassicPhotosDictionary.plist"
 
 @interface ListViewController : UITableViewController
+
+// main data source of controller
+@property (nonatomic, strong) NSDictionary *photos;
 
 @end
