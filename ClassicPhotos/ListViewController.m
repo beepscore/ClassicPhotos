@@ -39,6 +39,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - override getter
+- (NSDictionary *)photos {
+    if (!_photos) {
+        // Lazy instantiation
+        NSURL *dataSourceURL = [NSURL URLWithString:kDatasourceURLString];
+        // FIXME: This blocks main thread! It is bad practice, done as part of the tutorial.
+        _photos = [[NSDictionary alloc] initWithContentsOfURL:dataSourceURL];
+    }
+    return _photos;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
