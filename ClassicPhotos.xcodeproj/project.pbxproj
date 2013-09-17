@@ -21,6 +21,8 @@
 		DE9434BE17E7B0AC008E26C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE9434A617E7B0AC008E26C2 /* UIKit.framework */; };
 		DE9434C617E7B0AD008E26C2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DE9434C417E7B0AD008E26C2 /* InfoPlist.strings */; };
 		DE9434C817E7B0AD008E26C2 /* ClassicPhotosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DE9434C717E7B0AD008E26C2 /* ClassicPhotosTests.m */; };
+		DEAE4FFC17E7D5D3009C7322 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEAE4FFB17E7D5D3009C7322 /* Main.storyboard */; };
+		DEAE4FFF17E7DB52009C7322 /* BSImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DEAE4FFE17E7DB52009C7322 /* BSImageCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,9 @@
 		DE9434C317E7B0AC008E26C2 /* ClassicPhotosTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ClassicPhotosTests-Info.plist"; sourceTree = "<group>"; };
 		DE9434C517E7B0AD008E26C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DE9434C717E7B0AD008E26C2 /* ClassicPhotosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClassicPhotosTests.m; sourceTree = "<group>"; };
+		DEAE4FFB17E7D5D3009C7322 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		DEAE4FFD17E7DB52009C7322 /* BSImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSImageCell.h; sourceTree = "<group>"; };
+		DEAE4FFE17E7DB52009C7322 /* BSImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSImageCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,12 +119,15 @@
 		DE9434A817E7B0AC008E26C2 /* ClassicPhotos */ = {
 			isa = PBXGroup;
 			children = (
+				DE9434A917E7B0AC008E26C2 /* Supporting Files */,
+				DEAE4FFB17E7D5D3009C7322 /* Main.storyboard */,
 				DE9434B117E7B0AC008E26C2 /* AppDelegate.h */,
 				DE9434B217E7B0AC008E26C2 /* AppDelegate.m */,
 				DE7615B817E7C2CD001A1740 /* ListViewController.h */,
 				DE7615B917E7C2CD001A1740 /* ListViewController.m */,
 				DE9434B417E7B0AC008E26C2 /* Images.xcassets */,
-				DE9434A917E7B0AC008E26C2 /* Supporting Files */,
+				DEAE4FFD17E7DB52009C7322 /* BSImageCell.h */,
+				DEAE4FFE17E7DB52009C7322 /* BSImageCell.m */,
 			);
 			path = ClassicPhotos;
 			sourceTree = "<group>";
@@ -228,6 +236,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEAE4FFC17E7D5D3009C7322 /* Main.storyboard in Resources */,
 				DE9434AD17E7B0AC008E26C2 /* InfoPlist.strings in Resources */,
 				DE9434B517E7B0AC008E26C2 /* Images.xcassets in Resources */,
 			);
@@ -248,6 +257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEAE4FFF17E7DB52009C7322 /* BSImageCell.m in Sources */,
 				DE9434B317E7B0AC008E26C2 /* AppDelegate.m in Sources */,
 				DE9434AF17E7B0AC008E26C2 /* main.m in Sources */,
 				DE7615BA17E7C2CD001A1740 /* ListViewController.m in Sources */,

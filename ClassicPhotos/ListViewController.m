@@ -62,13 +62,35 @@
     return self.photos.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
+    // In storyboard prototype cell register cell by setting
+    // cell identifier to match. i.e. Cell - no @, no quotes
+    static NSString *kCellIdentifier = @"Cell";
+
+    // iOS 6 new method dequeueReusableCellWithIdentifier:forIndexPath:
+    // requires you to first register a class or nib file
+    // and will then always return a valid cell - either from the queue or by creating a new cell.
+    // Reference
+    // http://useyourloaf.com/blog/2012/06/07/prototype-table-cells-and-storyboards.html
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier
+                                                            forIndexPath:indexPath];
+
     // Configure the cell...
-    
+    NSString *rowKey = [[self.photos allKeys] objectAtIndex:indexPath.row];
+    NSURL *imageURL = [NSURL URLWithString:[self.photos objectForKey:rowKey]];
+    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+    UIImage *image = nil;
+
+    if (imageData) {
+        UIImage *unfiltered_image = [UIImage imageWithData:imageData];
+        //image = [self applySepiaFilterToImage:unfiltered_image];
+    }
+
+    cell.textLabel.text = rowKey;
+    cell.imageView.image = image;
+
     return cell;
 }
 

@@ -12,18 +12,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-
-    ListViewController *listViewController = [[ListViewController alloc]
-                                              initWithStyle:UITableViewStylePlain];
-    UINavigationController *navController = [[UINavigationController alloc]
-                                             initWithRootViewController:listViewController];
-
-    self.window.rootViewController = navController;
-
-    [self.window makeKeyAndVisible];
     return YES;
 }
 
