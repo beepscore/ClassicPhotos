@@ -29,8 +29,6 @@
 {
     [super viewDidLoad];
     self.title = @"Classic Photos";
-    self.tableView.rowHeight = 80.0;
-
 }
 
 - (void)didReceiveMemoryWarning
