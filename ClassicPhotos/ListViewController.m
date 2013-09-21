@@ -134,22 +134,18 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier
                                                             forIndexPath:indexPath];
 
+    // Configure the cell...
     UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     cell.accessoryView = activityIndicatorView;
 
-    // Configure the cell...
-    // 2
     PhotoRecord *aRecord = [self.photos objectAtIndex:indexPath.row];
 
-    // 3
     if (aRecord.hasImage) {
-
         [((UIActivityIndicatorView *)cell.accessoryView) stopAnimating];
         cell.imageView.image = aRecord.image;
         cell.textLabel.text = aRecord.name;
-
     }
-    // 4
+
     else if (aRecord.isFailed) {
         [((UIActivityIndicatorView *)cell.accessoryView) stopAnimating];
         cell.imageView.image = [UIImage imageNamed:@"Failed.png"];
