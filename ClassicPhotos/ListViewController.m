@@ -52,7 +52,10 @@
         NSURL *datasourceURL = [NSURL URLWithString:kDatasourceURLString];
         NSURLRequest *request = [NSURLRequest requestWithURL:datasourceURL];
 
+        // https://github.com/AFNetworking/AFNetworking/wiki/AFNetworking-2.0-Migration-Guide
         AFHTTPRequestOperation *datasource_download_operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+
+        datasource_download_operation.responseSerializer = [AFHTTPResponseSerializer serializer];
 
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 
