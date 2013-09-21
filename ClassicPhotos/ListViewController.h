@@ -7,13 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreImage/CoreImage.h>
+#import "PhotoRecord.h"
+#import "PendingOperations.h"
+#import "ImageDownloader.h"
+#import "ImageFiltration.h"
+#import "AFNetworking/AFNetworking.h"
 
+// Note: Both URLs appear to contain the same info.
+//#define kDatasourceURLString @"https://sites.google.com/site/soheilsstudio/tutorials/nsoperationsampleproject/ClassicPhotosDictionary.plist"
 #define kDatasourceURLString @"http://www.raywenderlich.com/downloads/ClassicPhotosDictionary.plist"
 
-@interface ListViewController : UITableViewController
+
+@interface ListViewController : UITableViewController <ImageDownloaderDelegate, ImageFiltrationDelegate>
 
 // main data source of controller
-@property (nonatomic, strong) NSDictionary *photos;
+@property (nonatomic, strong) NSMutableArray *photos;
+
+@property (nonatomic, strong) PendingOperations *pendingOperations;
 
 @end

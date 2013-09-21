@@ -38,12 +38,68 @@
 }
 
 #pragma mark - override getter
-- (NSDictionary *)photos {
+- (PendingOperations *)pendingOperations {
+    if (!_pendingOperations) {
+        _pendingOperations = [[PendingOperations alloc] init];
+    }
+    return _pendingOperations;
+}
+
+- (NSMutableArray *)photos {
+
     if (!_photos) {
-        // Lazy instantiation
-        NSURL *dataSourceURL = [NSURL URLWithString:kDatasourceURLString];
-        // FIXME: This blocks main thread! It is bad practice, done as part of the tutorial.
-        _photos = [[NSDictionary alloc] initWithContentsOfURL:dataSourceURL];
+
+        NSURL *datasourceURL = [NSURL URLWithString:kDatasourceURLString];
+        NSURLRequest *request = [NSURLRequest requestWithURL:datasourceURL];
+
+        AFHTTPRequestOperation *datasource_download_operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+
+        // set operation success and failure blocks
+        [datasource_download_operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            // success block
+            NSData *datasource_data = (NSData *)responseObject;
+            // Use toll-free bridging to convert data to CFDataRer and CFPropertyList
+            CFPropertyListRef plist =  CFPropertyListCreateFromXMLData(kCFAllocatorDefault, (__bridge CFDataRef)datasource_data, kCFPropertyListImmutable, NULL);
+
+            NSDictionary *datasource_dictionary = (__bridge NSDictionary *)plist;
+
+            NSMutableArray *records = [NSMutableArray array];
+
+            for (NSString *key in datasource_dictionary) {
+                PhotoRecord *record = [[PhotoRecord alloc] init];
+                record.URL = [NSURL URLWithString:[datasource_dictionary objectForKey:key]];
+                record.name = key;
+                [records addObject:record];
+                record = nil;
+            }
+
+            self.photos = records;
+
+            // ARC compatible?
+            //CFRelease(plist);
+
+            [self.tableView reloadData];
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error){
+
+            // failure block
+            // Connection error message
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                            message:error.localizedDescription
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            alert = nil;
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        }];
+
+        // add operation to the queue
+        [self.pendingOperations.downloadQueue addOperation:datasource_download_operation];
     }
     return _photos;
 }
@@ -76,23 +132,86 @@
                                                             forIndexPath:indexPath];
 
     // Configure the cell...
-    NSString *rowKey = [[self.photos allKeys] objectAtIndex:indexPath.row];
-    NSURL *imageURL = [NSURL URLWithString:[self.photos objectForKey:rowKey]];
-    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-    UIImage *image = nil;
+    // 2
+    PhotoRecord *aRecord = [self.photos objectAtIndex:indexPath.row];
 
-    if (imageData) {
-        UIImage *unfiltered_image = [UIImage imageWithData:imageData];
-        image = [self applySepiaFilterToImage:unfiltered_image];
+    // 3
+    if (aRecord.hasImage) {
+
+        //[((UIActivityIndicatorView *)cell.accessoryView) stopAnimating];
+        cell.imageView.image = aRecord.image;
+        cell.textLabel.text = aRecord.name;
+
     }
+    // 4
+    else if (aRecord.isFailed) {
+        //[((UIActivityIndicatorView *)cell.accessoryView) stopAnimating];
+        cell.imageView.image = [UIImage imageNamed:@"Failed.png"];
+        cell.textLabel.text = @"Failed to load";
 
-    cell.textLabel.text = rowKey;
-    cell.imageView.image = image;
+    }
+    // 5
+    else {
 
+        //[((UIActivityIndicatorView *)cell.accessoryView) startAnimating];
+        cell.imageView.image = [UIImage imageNamed:@"Placeholder.png"];
+        cell.textLabel.text = @"";
+        [self startOperationsForPhotoRecord:aRecord atIndexPath:indexPath];
+    }
     return cell;
 }
 
+- (void)startOperationsForPhotoRecord:(PhotoRecord *)record atIndexPath:(NSIndexPath *)indexPath {
+
+    if (!record.hasImage) {
+        [self startImageDownloadingForRecord:record atIndexPath:indexPath];
+    }
+    if (!record.isFiltered) {
+        [self startImageFiltrationForRecord:record atIndexPath:indexPath];
+    }
+}
+
+#pragma mark - Image download
+- (void)startImageDownloadingForRecord:(PhotoRecord *)record atIndexPath:(NSIndexPath *)indexPath {
+
+    if (![self.pendingOperations.downloadsInProgress.allKeys containsObject:indexPath]) {
+
+        ImageDownloader *imageDownloader = [[ImageDownloader alloc] initWithPhotoRecord:record atIndexPath:indexPath delegate:self];
+        [self.pendingOperations.downloadsInProgress setObject:imageDownloader forKey:indexPath];
+        [self.pendingOperations.downloadQueue addOperation:imageDownloader];
+    }
+}
+
+#pragma mark - ImageDownloaderDelegate method
+- (void)imageDownloaderDidFinish:(ImageDownloader *)downloader {
+
+    // 1
+    NSIndexPath *indexPath = downloader.indexPathInTableView;
+    // 2
+    //PhotoRecord *theRecord = downloader.photoRecord;
+    // 3
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    // 4
+    [self.pendingOperations.downloadsInProgress removeObjectForKey:indexPath];
+}
+
 #pragma mark - Image filtration
+- (void)startImageFiltrationForRecord:(PhotoRecord *)record atIndexPath:(NSIndexPath *)indexPath {
+
+    if (![self.pendingOperations.filtrationsInProgress.allKeys containsObject:indexPath]) {
+        // Start filtration
+        ImageFiltration *imageFiltration = [[ImageFiltration alloc] initWithPhotoRecord:record atIndexPath:indexPath delegate:self];
+
+        ImageDownloader *dependency = [self.pendingOperations.downloadsInProgress objectForKey:indexPath];
+        if (dependency) {
+            [imageFiltration addDependency:dependency];
+        }
+
+        [self.pendingOperations.filtrationsInProgress setObject:imageFiltration forKey:indexPath];
+        [self.pendingOperations.filtrationQueue addOperation:imageFiltration];
+    }
+}
+
 - (UIImage *)applySepiaFilterToImage:(UIImage *)image {
 
     CIImage *inputImage = [CIImage imageWithData:UIImagePNGRepresentation(image)];
@@ -104,6 +223,15 @@
     sepiaImage = [UIImage imageWithCGImage:outputImageRef];
     CGImageRelease(outputImageRef);
     return sepiaImage;
+}
+
+#pragma mark - ImageFiltrationDelegate method
+- (void)imageFiltrationDidFinish:(ImageFiltration *)filtration {
+    NSIndexPath *indexPath = filtration.indexPathInTableView;
+    //PhotoRecord *theRecord = filtration.photoRecord;
+
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self.pendingOperations.filtrationsInProgress removeObjectForKey:indexPath];
 }
 
 /*
