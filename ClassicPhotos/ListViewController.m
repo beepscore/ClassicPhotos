@@ -134,6 +134,9 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier
                                                             forIndexPath:indexPath];
 
+    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    cell.accessoryView = activityIndicatorView;
+
     // Configure the cell...
     // 2
     PhotoRecord *aRecord = [self.photos objectAtIndex:indexPath.row];
@@ -141,14 +144,14 @@
     // 3
     if (aRecord.hasImage) {
 
-        //[((UIActivityIndicatorView *)cell.accessoryView) stopAnimating];
+        [((UIActivityIndicatorView *)cell.accessoryView) stopAnimating];
         cell.imageView.image = aRecord.image;
         cell.textLabel.text = aRecord.name;
 
     }
     // 4
     else if (aRecord.isFailed) {
-        //[((UIActivityIndicatorView *)cell.accessoryView) stopAnimating];
+        [((UIActivityIndicatorView *)cell.accessoryView) stopAnimating];
         cell.imageView.image = [UIImage imageNamed:@"Failed.png"];
         cell.textLabel.text = @"Failed to load";
 
@@ -156,7 +159,7 @@
     // 5
     else {
 
-        //[((UIActivityIndicatorView *)cell.accessoryView) startAnimating];
+        [((UIActivityIndicatorView *)cell.accessoryView) startAnimating];
         cell.imageView.image = [UIImage imageNamed:@"Placeholder.png"];
         cell.textLabel.text = @"";
         [self startOperationsForPhotoRecord:aRecord atIndexPath:indexPath];
