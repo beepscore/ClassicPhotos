@@ -157,7 +157,11 @@
         [((UIActivityIndicatorView *)cell.accessoryView) startAnimating];
         cell.imageView.image = [UIImage imageNamed:@"Placeholder.png"];
         cell.textLabel.text = @"";
-        [self startOperationsForPhotoRecord:aRecord atIndexPath:indexPath];
+
+        // if not scrolling, start operations.
+        if (!tableView.dragging && !tableView.decelerating) {
+            [self startOperationsForPhotoRecord:aRecord atIndexPath:indexPath];
+        }
     }
     return cell;
 }
