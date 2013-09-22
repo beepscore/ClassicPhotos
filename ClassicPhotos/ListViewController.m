@@ -82,8 +82,8 @@
 
             self.photos = records;
 
-            // ARC compatible?
-            //CFRelease(plist);
+            // ARC compatible
+            CFRelease(plist);
 
             [self.tableView reloadData];
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
