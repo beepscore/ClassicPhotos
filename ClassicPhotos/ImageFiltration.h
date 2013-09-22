@@ -24,5 +24,6 @@
 @end
 
 @protocol ImageFiltrationDelegate <NSObject>
+// ImageFiltration calls delegate method imageFiltrationDidFinish: on main thread.
 - (void)imageFiltrationDidFinish:(ImageFiltration *)filtration;
 @end

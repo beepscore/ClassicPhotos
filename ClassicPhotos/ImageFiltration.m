@@ -53,8 +53,13 @@
         if (processedImage) {
             self.photoRecord.image = processedImage;
             self.photoRecord.filtered = YES;
+
+            // Call delegate method imageFiltrationDidFinish: on main thread.
+            // Cast delegate from id<ImageFiltrationDelegate> to NSObject
+            // in order to call NSObject method performSelectorOnMainThread
             [(NSObject *)self.delegate performSelectorOnMainThread:@selector(imageFiltrationDidFinish:)
-                                                        withObject:self waitUntilDone:NO];
+                                                        withObject:self
+                                                     waitUntilDone:NO];
         }
     }
 }

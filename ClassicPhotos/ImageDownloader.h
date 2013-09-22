@@ -25,6 +25,7 @@
 
 @protocol ImageDownloaderDelegate <NSObject>
 
+// ImageDownloader calls delegate method imageDownloaderDidFinish: on main thread.
 - (void)imageDownloaderDidFinish:(ImageDownloader *)downloader;
 
 @end

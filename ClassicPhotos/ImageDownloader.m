@@ -58,9 +58,12 @@
         if (self.isCancelled)
             return;
 
-        // Cast delegate from id<ImageDownloaderDelegate> to NSObject in order to call method performSelectorOnMainThread
+        // Call delegate method imageDownloaderDidFinish: on main thread.
+        // Cast delegate from id<ImageDownloaderDelegate> to NSObject
+        // in order to call NSObject method performSelectorOnMainThread
         [(NSObject *)self.delegate performSelectorOnMainThread:@selector(imageDownloaderDidFinish:)
-                                                    withObject:self waitUntilDone:NO];
+                                                    withObject:self
+                                                 waitUntilDone:NO];
     }
 }
 
