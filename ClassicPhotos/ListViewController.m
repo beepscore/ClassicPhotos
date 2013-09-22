@@ -33,6 +33,7 @@
 
 - (void)didReceiveMemoryWarning
 {
+    [self cancelAllOperations];
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -279,6 +280,11 @@
 - (void)resumeAllOperations {
     [self.pendingOperations.downloadQueue setSuspended:NO];
     [self.pendingOperations.filtrationQueue setSuspended:NO];
+}
+
+- (void)cancelAllOperations {
+    [self.pendingOperations.downloadQueue cancelAllOperations];
+    [self.pendingOperations.filtrationQueue cancelAllOperations];
 }
 
 - (void)loadImagesForOnscreenCells {
