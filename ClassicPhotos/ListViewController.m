@@ -73,6 +73,7 @@
 
             for (NSString *key in datasource_dictionary) {
                 PhotoRecord *record = [[PhotoRecord alloc] init];
+                // set record properties name and URL, but don't set image yet.
                 record.URL = [NSURL URLWithString:[datasource_dictionary objectForKey:key]];
                 record.name = key;
                 [records addObject:record];
@@ -152,7 +153,7 @@
         cell.textLabel.text = @"Failed to load";
 
     }
-    // 5
+
     else {
 
         [((UIActivityIndicatorView *)cell.accessoryView) startAnimating];
@@ -174,6 +175,7 @@
 }
 
 #pragma mark - Image download
+// if not downloading image already, add to queue to download on background thread
 - (void)startImageDownloadingForRecord:(PhotoRecord *)record atIndexPath:(NSIndexPath *)indexPath {
 
     if (![self.pendingOperations.downloadsInProgress.allKeys containsObject:indexPath]) {
@@ -185,24 +187,27 @@
 }
 
 #pragma mark - ImageDownloaderDelegate method
+// This method updates UI, so it must be called on the main thread.
 - (void)imageDownloaderDidFinish:(ImageDownloader *)downloader {
 
-    // 1
     NSIndexPath *indexPath = downloader.indexPathInTableView;
     // 2
     //PhotoRecord *theRecord = downloader.photoRecord;
-    // 3
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    // 4
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                          withRowAnimation:UITableViewRowAnimationFade];
+
     [self.pendingOperations.downloadsInProgress removeObjectForKey:indexPath];
 }
 
 #pragma mark - Image filtration
+// if not filtering image already, after image is downloaded add to queue to filter on background thread
 - (void)startImageFiltrationForRecord:(PhotoRecord *)record atIndexPath:(NSIndexPath *)indexPath {
 
     if (![self.pendingOperations.filtrationsInProgress.allKeys containsObject:indexPath]) {
         // Start filtration
-        ImageFiltration *imageFiltration = [[ImageFiltration alloc] initWithPhotoRecord:record atIndexPath:indexPath delegate:self];
+        ImageFiltration *imageFiltration = [[ImageFiltration alloc] initWithPhotoRecord:record
+                                                                            atIndexPath:indexPath
+                                                                               delegate:self];
 
         ImageDownloader *dependency = [self.pendingOperations.downloadsInProgress objectForKey:indexPath];
         if (dependency) {
@@ -228,11 +233,13 @@
 }
 
 #pragma mark - ImageFiltrationDelegate method
+// This method updates UI, so it must be called on the main thread.
 - (void)imageFiltrationDidFinish:(ImageFiltration *)filtration {
     NSIndexPath *indexPath = filtration.indexPathInTableView;
     //PhotoRecord *theRecord = filtration.photoRecord;
 
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                          withRowAnimation:UITableViewRowAnimationFade];
     [self.pendingOperations.filtrationsInProgress removeObjectForKey:indexPath];
 }
 
