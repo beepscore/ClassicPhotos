@@ -151,11 +151,9 @@
         [((UIActivityIndicatorView *)cell.accessoryView) stopAnimating];
         cell.imageView.image = [UIImage imageNamed:@"Failed.png"];
         cell.textLabel.text = @"Failed to load";
-
     }
 
     else {
-
         [((UIActivityIndicatorView *)cell.accessoryView) startAnimating];
         cell.imageView.image = [UIImage imageNamed:@"Placeholder.png"];
         cell.textLabel.text = @"";
