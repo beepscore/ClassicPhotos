@@ -178,8 +178,11 @@
 
     if (![self.pendingOperations.downloadsInProgress.allKeys containsObject:indexPath]) {
 
-        ImageDownloader *imageDownloader = [[ImageDownloader alloc] initWithPhotoRecord:record atIndexPath:indexPath delegate:self];
-        [self.pendingOperations.downloadsInProgress setObject:imageDownloader forKey:indexPath];
+        ImageDownloader *imageDownloader = [[ImageDownloader alloc] initWithPhotoRecord:record
+                                                                            atIndexPath:indexPath
+                                                                               delegate:self];
+        [self.pendingOperations.downloadsInProgress setObject:imageDownloader
+                                                       forKey:indexPath];
         [self.pendingOperations.downloadQueue addOperation:imageDownloader];
     }
 }
@@ -212,7 +215,8 @@
             [imageFiltration addDependency:dependency];
         }
 
-        [self.pendingOperations.filtrationsInProgress setObject:imageFiltration forKey:indexPath];
+        [self.pendingOperations.filtrationsInProgress setObject:imageFiltration
+                                                         forKey:indexPath];
         [self.pendingOperations.filtrationQueue addOperation:imageFiltration];
     }
 }
