@@ -210,7 +210,8 @@
                                                                             atIndexPath:indexPath
                                                                                delegate:self];
 
-        ImageDownloader *dependency = [self.pendingOperations.downloadsInProgress objectForKey:indexPath];
+        ImageDownloader *dependency = [self.pendingOperations.downloadsInProgress
+                                       objectForKey:indexPath];
         if (dependency) {
             [imageFiltration addDependency:dependency];
         }
