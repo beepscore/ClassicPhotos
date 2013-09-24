@@ -37,8 +37,9 @@
     @autoreleasepool {
 
         // Check isCancelled regularly, in order to stop promptly.
-        if (self.isCancelled)
+        if (self.isCancelled) {
             return;
+        }
 
         NSData *imageData = [[NSData alloc] initWithContentsOfURL:self.photoRecord.URL];
 
@@ -57,8 +58,9 @@
 
         imageData = nil;
 
-        if (self.isCancelled)
+        if (self.isCancelled) {
             return;
+        }
 
         // Call delegate method imageDownloaderDidFinish: on main thread.
         // Cast delegate from id<ImageDownloaderDelegate> to NSObject
