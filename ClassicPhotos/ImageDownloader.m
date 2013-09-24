@@ -9,7 +9,7 @@
 #import "ImageDownloader.h"
 
 @interface ImageDownloader ()
-    // change to readwrite
+// change to readwrite
 @property (nonatomic, readwrite, strong) NSIndexPath *indexPathInTableView;
 @property (nonatomic, readwrite, strong) PhotoRecord *photoRecord;
 @end
