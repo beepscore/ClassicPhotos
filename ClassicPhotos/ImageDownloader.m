@@ -31,7 +31,9 @@
 
 #pragma mark - Downloading image
 - (void)main {
-
+    // Create an autorelease pool for this NSOperation object.
+    // NSOperation runs on a background thread,
+    // doesn't have access to the main thread's autorelease pool.
     @autoreleasepool {
 
         // Check isCancelled regularly, in order to stop promptly.
