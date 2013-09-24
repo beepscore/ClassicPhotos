@@ -23,10 +23,9 @@
                  delegate:(id<ImageDownloaderDelegate>)theDelegate {
 
     if (self = [super init]) {
-        // 2
-        self.delegate = theDelegate;
-        self.indexPathInTableView = indexPath;
         self.photoRecord = record;
+        self.indexPathInTableView = indexPath;
+        self.delegate = theDelegate;
     }
     return self;
 }
