@@ -291,32 +291,33 @@
 
     NSSet *visibleRows = [NSSet setWithArray:[self.tableView indexPathsForVisibleRows]];
 
-    // 2
     NSMutableSet *pendingOperations = [NSMutableSet setWithArray:[self.pendingOperations.downloadsInProgress allKeys]];
     [pendingOperations addObjectsFromArray:[self.pendingOperations.filtrationsInProgress allKeys]];
 
     NSMutableSet *toBeCancelled = [pendingOperations mutableCopy];
     NSMutableSet *toBeStarted = [visibleRows mutableCopy];
 
-    // 3
+    // remove in progress operations from toBeStarted
     [toBeStarted minusSet:pendingOperations];
-    // 4
+    // don't cancel pending operations for visible rows
     [toBeCancelled minusSet:visibleRows];
 
-    // 5
+    // cancel some pending operations toBeCancelled and update properties
     for (NSIndexPath *anIndexPath in toBeCancelled) {
 
-        ImageDownloader *pendingDownload = [self.pendingOperations.downloadsInProgress objectForKey:anIndexPath];
+        ImageDownloader *pendingDownload = [self.pendingOperations.downloadsInProgress
+                                            objectForKey:anIndexPath];
         [pendingDownload cancel];
         [self.pendingOperations.downloadsInProgress removeObjectForKey:anIndexPath];
 
-        ImageFiltration *pendingFiltration = [self.pendingOperations.filtrationsInProgress objectForKey:anIndexPath];
+        ImageFiltration *pendingFiltration = [self.pendingOperations.filtrationsInProgress
+                                              objectForKey:anIndexPath];
         [pendingFiltration cancel];
         [self.pendingOperations.filtrationsInProgress removeObjectForKey:anIndexPath];
     }
     toBeCancelled = nil;
 
-    // 6
+    // start pending operations toBeStarted
     for (NSIndexPath *anIndexPath in toBeStarted) {
 
         PhotoRecord *recordToProcess = [self.photos objectAtIndex:anIndexPath.row];
