@@ -18,7 +18,9 @@
 
 #pragma mark - Life Cycle
 
-- (id)initWithPhotoRecord:(PhotoRecord *)record atIndexPath:(NSIndexPath *)indexPath delegate:(id<ImageDownloaderDelegate>)theDelegate {
+- (id)initWithPhotoRecord:(PhotoRecord *)record
+              atIndexPath:(NSIndexPath *)indexPath
+                 delegate:(id<ImageDownloaderDelegate>)theDelegate {
 
     if (self = [super init]) {
         // 2

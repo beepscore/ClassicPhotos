@@ -17,7 +17,9 @@
 
 #pragma mark - Life cycle
 
-- (id)initWithPhotoRecord:(PhotoRecord *)record atIndexPath:(NSIndexPath *)indexPath delegate:(id<ImageFiltrationDelegate>)theDelegate {
+- (id)initWithPhotoRecord:(PhotoRecord *)record
+              atIndexPath:(NSIndexPath *)indexPath
+                 delegate:(id<ImageFiltrationDelegate>)theDelegate {
 
     if (self = [super init]) {
         self.photoRecord = record;
